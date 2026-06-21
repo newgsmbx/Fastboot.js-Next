@@ -1,0 +1,104 @@
+:root,
+:root[data-resolved-theme="light"] {
+  --primary: #3f46c8;
+  --on-primary: #ffffff;
+  --primary-container: #e1e0ff;
+  --on-primary-container: #09006b;
+  --secondary: #5d5d72;
+  --on-secondary: #ffffff;
+  --secondary-container: #e3e0f9;
+  --on-secondary-container: #1a1a2c;
+  --tertiary: #007b83;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #a9eff4;
+  --on-tertiary-container: #002022;
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+  --on-error-container: #410002;
+  --background: #fbf8ff;
+  --on-background: #1b1b22;
+  --surface: #fbf8ff;
+  --on-surface: #1b1b22;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f5f2fa;
+  --surface-container: #efecf4;
+  --surface-container-high: #e9e7ef;
+  --surface-container-highest: #e4e1e9;
+  --outline: #787680;
+  --outline-variant: #c9c5d0;
+  --success: #1f7a4d;
+  --warning: #8a5a00;
+  --shadow: 0 20px 60px rgba(40, 36, 68, 0.14);
+}
+
+:root[data-resolved-theme="dark"] {
+  --primary: #c1c1ff;
+  --on-primary: #10118a;
+  --primary-container: #282ca7;
+  --on-primary-container: #e1e0ff;
+  --secondary: #c7c4dd;
+  --on-secondary: #2f2f42;
+  --secondary-container: #464559;
+  --on-secondary-container: #e3e0f9;
+  --tertiary: #88d3d9;
+  --on-tertiary: #00363a;
+  --tertiary-container: #005057;
+  --on-tertiary-container: #a9eff4;
+  --error: #ffb4ab;
+  --on-error: #690005;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
+  --background: #121219;
+  --on-background: #e5e1e9;
+  --surface: #121219;
+  --on-surface: #e5e1e9;
+  --surface-container-lowest: #0d0d13;
+  --surface-container-low: #1b1b22;
+  --surface-container: #202027;
+  --surface-container-high: #2a2931;
+  --surface-container-highest: #35343c;
+  --outline: #938f9a;
+  --outline-variant: #47464f;
+  --success: #78dba6;
+  --warning: #e1bd69;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+  color: var(--on-background);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: var(--font-sans);
+  background:
+    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--primary-container) 65%, transparent), transparent 32rem),
+    linear-gradient(180deg, var(--surface), var(--background));
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+a,
+select,
+input {
+  outline-color: var(--primary);
+  outline-offset: 3px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

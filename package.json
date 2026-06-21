@@ -1,0 +1,25 @@
+{
+  "name": "fastboot-js-next",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Modern Material Design 3 WebUSB fastboot workstation.",
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TG-Twilight/Fastboot.js-Next.git"
+  },
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc && vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "android-fastboot": "^1.1.3"
+  },
+  "devDependencies": {
+    "@types/w3c-web-usb": "^1.0.10",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}
