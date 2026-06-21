@@ -11,6 +11,7 @@ import { renderTaskPanel } from "./components/taskPanel";
 import { renderDeviceInfoPanel } from "./components/deviceInfoPanel";
 import { renderProgressPanel } from "./components/progressPanel";
 import { renderLogPanel } from "./components/logPanel";
+import { renderDebugUsbPanel } from "./components/debugUsbPanel";
 
 export interface AppViewState {
   locale: Locale;
@@ -24,6 +25,7 @@ export interface AppViewState {
   selectedBootFile: string;
   selectedFlashFile: string;
   selectedZipFile: string;
+  usbDebugLines: string[];
   lastError: string | null;
 }
 
@@ -48,6 +50,7 @@ export function renderApp(state: AppViewState): string {
         ${renderProgressPanel(state, t)}
         ${renderLogPanel(state, t)}
       </section>
+      ${renderDebugUsbPanel(state, t)}
       <section class="deploy-section" id="deploy">
         <div>
           <p class="eyebrow-text">${t("buildFor")}</p>

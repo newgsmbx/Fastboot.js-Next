@@ -20,7 +20,7 @@ declare module "android-fastboot" {
   export class UsbError extends Error {}
 
   export class FastbootDevice {
-    connected: boolean;
+    isConnected: boolean;
     device: USBDevice | null;
     connect(): Promise<void>;
     waitForDisconnect(): Promise<void>;

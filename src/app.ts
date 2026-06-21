@@ -1,5 +1,5 @@
 import { emptyDeviceInfo } from "./core/deviceInfo";
-import { FastbootClient, FastbootProgress } from "./core/fastbootClient";
+import { FastbootClient, FastbootProgress, formatErrorDetails } from "./core/fastbootClient";
 import { ConnectionState, OperationKind, ProgressState } from "./core/operationTypes";
 import { getStoredLocale, Locale, storeLocale, translate } from "./i18n";
 import { AppViewState, renderApp } from "./ui/renderApp";
@@ -28,7 +28,8 @@ export class FastbootNextApp extends HTMLElement {
     onReconnectNeeded: () => {
       this.logger.log("warning", translate(this.state.locale, "reconnectNeeded"));
       this.setProgressStep("transfer", "running");
-    }
+    },
+    onDiagnostic: (message) => this.logger.log("info", message)
   });
 
   private state: AppViewState = {
@@ -43,6 +44,7 @@ export class FastbootNextApp extends HTMLElement {
     selectedBootFile: "",
     selectedFlashFile: "",
     selectedZipFile: "",
+    usbDebugLines: [],
     lastError: null
   };
 
@@ -99,6 +101,11 @@ export class FastbootNextApp extends HTMLElement {
 
     if (action === "refresh-info") {
       void this.refreshDeviceInfo();
+      return;
+    }
+
+    if (action === "debug-usb") {
+      void this.debugUsb();
       return;
     }
 
@@ -180,6 +187,26 @@ export class FastbootNextApp extends HTMLElement {
       this.logger.log("success", `Connected to ${this.state.deviceInfo.product ?? "fastboot device"}.`);
     } catch (error) {
       this.fail(error);
+    }
+  }
+
+  private async debugUsb(): Promise<void> {
+    this.logger.log("info", "Starting WebUSB debug request.");
+    this.state.usbDebugLines = ["Starting WebUSB debug request..."];
+    this.render();
+
+    try {
+      const report = await this.client.debugUsbRequest();
+      this.state.usbDebugLines = report.lines;
+      for (const line of report.lines) {
+        this.logger.log("info", line);
+      }
+      this.render();
+    } catch (error) {
+      const details = formatErrorDetails(error);
+      this.state.usbDebugLines = details.split("\n");
+      this.logger.log("error", details);
+      this.render();
     }
   }
 
@@ -332,11 +359,12 @@ export class FastbootNextApp extends HTMLElement {
 
   private fail(error: unknown): void {
     const message = error instanceof Error ? error.message : String(error);
+    const details = formatErrorDetails(error);
     this.state.lastError = message;
     this.setProgressStep("finish", "error", false);
     this.state.progress = { ...this.state.progress, label: message };
     this.state.status = "error";
-    this.logger.log("error", message);
+    this.logger.log("error", details);
     this.render();
   }
 
